@@ -21,8 +21,6 @@ zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
 # ohmyzsh plugins
-zinit snippet OMZP::git
-zinit snippet OMZP::archlinux
 zinit snippet OMZP::colored-man-pages
 
 # History
@@ -94,10 +92,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Shell integrations
-fzf --version >/dev/null 2>&1 && eval "$(fzf --zsh)"
-zoxide --version >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v fzf &>/dev/null && eval "$(fzf --zsh)"
+command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 
-if oh-my-posh version >/dev/null 2>&1; then
+if type -p oh-my-posh &>/dev/null; then
   eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/telf.toml)"
 
   # oh-my-posh vi mode integration
