@@ -94,41 +94,4 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # Shell integrations
 command -v fzf &>/dev/null && eval "$(fzf --zsh)"
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
-
-if type -p oh-my-posh &>/dev/null; then
-  eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/telf.toml)"
-
-  # oh-my-posh vi mode integration
-  # https://github.com/JanDeDobbeleer/oh-my-posh/issues/5438
-  _omp_redraw-prompt() {
-    local precmd
-    for precmd in $precmd_functions; do
-      $precmd
-    done
-
-    zle .reset-prompt
-  }
-
-  function _omp_zle-keymap-select() {
-      if [ "${KEYMAP}" = 'vicmd' ]; then
-          export ZSH_VI_MODE="N"
-      else
-          export ZSH_VI_MODE="I"
-      fi
-
-      _omp_redraw-prompt
-  }
-  _omp_create_widget zle-keymap-select _omp_zle-keymap-select
-
-  # Reset to default mode at the end of line input reading
-  function _omp_zle-line-finish() {
-      export ZSH_VI_MODE="I"
-  }
-  _omp_create_widget zle-line-finish _omp_zle-line-finish
-
-  # Catch SIGINT (C-c) in CMD mode, reset to Insert mode and repropagate SIGINT
-  TRAPINT() {
-      export ZSH_VI_MODE="I"
-      return $(( 128 + $1 ))
-  }
-fi
+command -v starship &>/dev/null && eval "$(starship init zsh)"
